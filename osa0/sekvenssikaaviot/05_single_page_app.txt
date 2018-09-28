@@ -1,0 +1,15 @@
+﻿kayttaja->selain:
+note left of selain
+kayttaja kirjottaa osoiteriville
+fullstack-exampleapp.herokuapp.com/spa
+end note
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/spa
+note left of palvelin
+  muodostetaan HTML missä olemassaolevien
+  muistiinpanojen lukumäärä päivitettynä
+end note
+palvelin->selain: status 200, sivun HTML-koodi
+
+note left of selain
+ selain näyttää palvelimen palauttaman HTML:n
+end note

@@ -1,0 +1,14 @@
+﻿kayttaja->selain:
+note left of selain
+käyttäjä kirjoittaa tekstikenttään jotain
+ja painaa "Talleta" nappia
+end note
+selain->palvelin: POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+note left of palvelin
+lähetetään kirjoitettu teksti ja muodostetaan HTML jossa
+on olemassa olevat ja uusi muistiinpano päivitettynä
+end note
+palvelin->selain: status 201, HTML-koodi
+note left of selain
+ selain päivittää listaan uuden muistiinpanon
+end note
