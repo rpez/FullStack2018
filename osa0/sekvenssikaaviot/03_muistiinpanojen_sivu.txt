@@ -1,0 +1,33 @@
+﻿kayttaja->selain:
+note left of selain
+kayttaja kirjottaa osoiteriville
+fullstack-exampleapp.herokuapp.com
+end note
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com
+note left of palvelin
+  muodostetaan HTML missä olemassaolevien
+  muistiinpanojen lukumäärä päivitettynä
+end note
+palvelin->selain: status 200, sivun HTML-koodi
+
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/kuva.png
+palvelin->selain: status 200, kuva
+note left of selain
+ selain näyttää palvelimen palauttaman HTML:n
+ johon on upotettu palvelimelta haettu kuva
+end note
+kayttaja->selain:
+note left of selain
+kayttaja painaa "muistiinpanot"
+nappia
+end note
+selain->palvelin: GET fullstack-exampleapp.herokuapp.com/notes
+note left of palvelin
+  muodostetaan HTML missä olemassaolevien
+  muistiinpanojen lukumäärä päivitettynä
+end note
+palvelin->selain: status 200, sivun HTML-, css- ja js-koodi sekä data json muodossa
+note left of selain
+ selain näyttää palvelimen palauttamat elementit
+ jossa näkyvät muistiinpanot
+end note

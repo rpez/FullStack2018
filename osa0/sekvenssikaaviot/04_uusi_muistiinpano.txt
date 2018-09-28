@@ -14,7 +14,7 @@ note left of palvelin
   muodostetaan HTML missä olemassaolevien
   muistiinpanojen lukumäärä päivitettynä
 end note
-palvelin->selain: status 200, HTML-koodi
+palvelin->selain: status 200, sivun HTML-, css- ja js-koodi sekä data json muodossa
 note left of selain
- selain näyttää palvelimen palauttaman HTML:n
+ selain näyttää palvelimen palauttamat elementit
 end note
