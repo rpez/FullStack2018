@@ -14,6 +14,8 @@ const Statistics = (props) => {
             <Statistic stat={props.stats[0]} />
             <Statistic stat={props.stats[1]} />
             <Statistic stat={props.stats[2]} />
+            <Statistic stat={props.stats[3]} />
+            <Statistic stat={props.stats[4]} />
         </div>
     )
 }
@@ -77,13 +79,21 @@ class App extends React.Component {
                 {
                     text: 'huono',
                     count: this.state.badCount
+                },
+                {
+                    text: 'keskiarvo',
+                    count: (this.state.goodCount - this.state.badCount) / (this.state.goodCount + this.state.badCount + this.state.neutralCount)
+                },
+                {
+                    text: 'positiivisia',
+                    count: this.state.goodCount / (this.state.goodCount + this.state.badCount + this.state.neutralCount) * 100 + ' %'
                 }
             ],
             funcs: [
                 this.addGood,
                 this.addNeurtal,
                 this.addBad
-            ]
+            ],
         }
         return (
             <div>
