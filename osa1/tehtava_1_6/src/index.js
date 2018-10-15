@@ -63,6 +63,19 @@ class App extends React.Component {
     addBad = () => {
         this.setState({ badCount: this.state.badCount + 1 })
     }
+    values = (feedback, valuesNotGiven) => {
+        console.log(valuesNotGiven)
+        if (!valuesNotGiven) {
+            return (
+                <Statistics stats={feedback.stats} />
+            )
+        }
+        else {
+            return (
+                <Title title={feedback.title} />
+            )
+        }
+    }
     render() {
         const feedback = {
             title: 'anna palautetta',
@@ -94,13 +107,14 @@ class App extends React.Component {
                 this.addNeurtal,
                 this.addBad
             ],
+            valuesNotGiven: this.state.goodCount !== 0 && this.state.neutralCount !== 0 && this.state.badCount !== 0
         }
         return (
             <div>
                 <Title title={feedback.title} />
                 <Buttons stats={feedback.stats} funcs={feedback.funcs} />
                 <Title title={feedback.subTitle} />
-                <Statistics stats={feedback.stats} />
+                {this.values(feedback, this.valuesNotGiven)}
             </div>
         )
     }
