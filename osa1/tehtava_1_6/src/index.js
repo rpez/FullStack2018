@@ -51,30 +51,29 @@ class App extends React.Component {
             badCount: 0,
             valuesNotGiven: true
         }
-        this.addGood = this.addGood.bind(this)
-        this.addNeurtal = this.addNeurtal.bind(this)
-        this.addBad = this.addBad.bind(this)
+        this.buttonFunc = this.buttonFunc.bind(this)
     }
-    addGood = () => {
-        this.setState({ 
-            goodCount: this.state.goodCount + 1,
-            valuesNotGiven: false
-        })
-    }
-    addNeurtal = () => {
-        this.setState({
-            neutralCount: this.state.neutralCount + 1,
-            valuesNotGiven: false
-        })
-    }
-    addBad = () => {
-        this.setState({
-            badCount: this.state.badCount + 1,
-            valuesNotGiven: false
-        })
+    buttonFunc = (value, id) => {
+        if (id == 0) return () => {
+            this.setState({
+                goodCount: value + 1,
+                valuesNotGiven: false
+            })
+        }
+        if (id == 1) return () => {
+            this.setState({
+                neutralCount: value + 1,
+                valuesNotGiven: false
+            })
+        }
+        if (id == 2) return () => {
+            this.setState({
+                badCount: value + 1,
+                valuesNotGiven: false
+            })
+        }
     }
     values = (feedback, valuesNotGiven) => {
-        console.log(valuesNotGiven)
         if (!valuesNotGiven) {
             return (
                 <Statistics stats={feedback.stats} />
@@ -114,9 +113,9 @@ class App extends React.Component {
                 }
             ],
             funcs: [
-                this.addGood,
-                this.addNeurtal,
-                this.addBad
+                this.buttonFunc(this.state.goodCount, 0),
+                this.buttonFunc(this.state.neutralCount, 1),
+                this.buttonFunc(this.state.badCount, 2)
             ],
             valuesNotGiven: this.state.valuesNotGiven
         }
