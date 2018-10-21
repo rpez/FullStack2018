@@ -10,20 +10,23 @@ const Title = (props) => {
 }
 const Statistics = (props) => {
     return (
-        <div>
-            <Statistic stat={props.stats[0]} />
-            <Statistic stat={props.stats[1]} />
-            <Statistic stat={props.stats[2]} />
-            <Statistic stat={props.stats[3]} />
-            <Statistic stat={props.stats[4]} />
-        </div>
+        <table>
+            <tbody>
+                <Statistic stat={props.stats[0]} />
+                <Statistic stat={props.stats[1]} />
+                <Statistic stat={props.stats[2]} />
+                <Statistic stat={props.stats[3]} />
+                <Statistic stat={props.stats[4]} />
+            </tbody>
+        </table>
     )
 }
 const Statistic = (props) => {
     return (
-        <div>
-            <p>{props.stat.text} {props.stat.count}</p>
-        </div>
+        <tr>
+            <td>{props.stat.text}</td>
+            <td>{props.stat.count}</td>
+        </tr>
     )
 }
 const Buttons = (props) => {
@@ -54,19 +57,19 @@ class App extends React.Component {
         this.buttonFunc = this.buttonFunc.bind(this)
     }
     buttonFunc = (value, id) => {
-        if (id == 0) return () => {
+        if (id === 0) return () => {
             this.setState({
                 goodCount: value + 1,
                 valuesNotGiven: false
             })
         }
-        if (id == 1) return () => {
+        if (id === 1) return () => {
             this.setState({
                 neutralCount: value + 1,
                 valuesNotGiven: false
             })
         }
-        if (id == 2) return () => {
+        if (id === 2) return () => {
             this.setState({
                 badCount: value + 1,
                 valuesNotGiven: false
