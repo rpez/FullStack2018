@@ -48,20 +48,30 @@ class App extends React.Component {
         this.state = {
             goodCount: 0,
             neutralCount: 0,
-            badCount: 0
+            badCount: 0,
+            valuesNotGiven: true
         }
         this.addGood = this.addGood.bind(this)
         this.addNeurtal = this.addNeurtal.bind(this)
         this.addBad = this.addBad.bind(this)
     }
     addGood = () => {
-        this.setState({ goodCount: this.state.goodCount + 1 })
+        this.setState({ 
+            goodCount: this.state.goodCount + 1,
+            valuesNotGiven: false
+        })
     }
     addNeurtal = () => {
-        this.setState({ neutralCount: this.state.neutralCount + 1 })
+        this.setState({
+            neutralCount: this.state.neutralCount + 1,
+            valuesNotGiven: false
+        })
     }
     addBad = () => {
-        this.setState({ badCount: this.state.badCount + 1 })
+        this.setState({
+            badCount: this.state.badCount + 1,
+            valuesNotGiven: false
+        })
     }
     values = (feedback, valuesNotGiven) => {
         console.log(valuesNotGiven)
@@ -72,7 +82,7 @@ class App extends React.Component {
         }
         else {
             return (
-                <Title title={feedback.title} />
+                <div>{feedback.noStatistics}</div>
             )
         }
     }
@@ -80,6 +90,7 @@ class App extends React.Component {
         const feedback = {
             title: 'anna palautetta',
             subTitle: 'statistiikka',
+            noStatistics: 'ei yhtään palautetta annettu',
             stats: [
                 {
                     text: 'hyvä',
@@ -107,14 +118,14 @@ class App extends React.Component {
                 this.addNeurtal,
                 this.addBad
             ],
-            valuesNotGiven: this.state.goodCount !== 0 && this.state.neutralCount !== 0 && this.state.badCount !== 0
+            valuesNotGiven: this.state.valuesNotGiven
         }
         return (
             <div>
                 <Title title={feedback.title} />
                 <Buttons stats={feedback.stats} funcs={feedback.funcs} />
                 <Title title={feedback.subTitle} />
-                {this.values(feedback, this.valuesNotGiven)}
+                {this.values(feedback, feedback.valuesNotGiven)}
             </div>
         )
     }
