@@ -6,7 +6,8 @@ class App extends React.Component {
         super(props)
         this.state = {
             points: [0, 0, 0, 0, 0, 0],
-            selected: 0
+            selected: 0,
+            mostPoints: 0
         }
     }
     getRandomInt(max) {
@@ -19,6 +20,7 @@ class App extends React.Component {
         const copy = this.state.points
         copy[target] += 1
         this.setState({ points: copy })
+        if (this.state.points[target] > this.state.points[this.state.mostPoints]) this.setState({ mostPoints: target })
     }
     render() {
         return (
@@ -27,6 +29,9 @@ class App extends React.Component {
                 <div>has {this.state.points[this.state.selected]} votes</div>
                 <button onClick={() => this.setSelected(this.getRandomInt(6))}>next anecdote</button>
                 <button onClick={() => this.voteCurrent(this.state.selected)}>vote</button>
+                <h1>anecdote with most votes:</h1>
+                <div>{this.props.anecdotes[this.state.mostPoints]}</div>
+                <div>has {this.state.points[this.state.mostPoints]} votes</div>
             </div >
         )
     }
