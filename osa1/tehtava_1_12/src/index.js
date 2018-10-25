@@ -5,6 +5,7 @@ class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            points: [0, 0, 0, 0, 0, 0],
             selected: 0
         }
     }
@@ -12,19 +13,21 @@ class App extends React.Component {
         return Math.floor(Math.random() * Math.floor(max));
     }
     setSelected(target) {
-        return () => {
-            console.log(target)
-            this.setState({ selected: target })
-        }
+        this.setState({ selected: target })
+    }
+    voteCurrent(target) {
+        const copy = this.state.points
+        copy[target] += 1
+        this.setState({ points: copy })
     }
     render() {
         return (
             <div>
                 <div>{this.props.anecdotes[this.state.selected]}</div>
-                <div>
-                    <button onClick={this.setSelected(this.getRandomInt(5))}>next anecdote</button>
-                </div>
-            </div>
+                <div>has {this.state.points[this.state.selected]} votes</div>
+                <button onClick={() => this.setSelected(this.getRandomInt(6))}>next anecdote</button>
+                <button onClick={() => this.voteCurrent(this.state.selected)}>vote</button>
+            </div >
         )
     }
 }
