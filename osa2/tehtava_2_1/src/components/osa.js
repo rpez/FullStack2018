@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Osa = ({ osa, tehtavia }) => {
+const Osa = ({ osa }) => {
   return (
-    <p>{osa} {tehtavia}</p>
+    <p>{osa.nimi} {osa.tehtavia}</p>
   )
 }
 
