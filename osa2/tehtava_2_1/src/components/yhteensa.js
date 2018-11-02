@@ -1,9 +1,10 @@
 import React from 'react'
 
-const Kurssi = ({ kurssi }) => {
+const Yhteensa = ({ yhteensa }) => {
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
   return (
-    <li>{kurssi.content}</li>
+    <div>yhteensä {yhteensa.map(osa => osa.tehtavia).reduce(reducer)} tehtävää</div>
   )
 }
 
-export default Kurssi
+export default Yhteensa
