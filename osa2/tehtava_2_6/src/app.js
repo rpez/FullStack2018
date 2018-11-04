@@ -19,11 +19,13 @@ class App extends React.Component {
         const nameObject = {
             name: this.state.newName
         }
-        const persons = this.state.persons.concat(nameObject)
-        this.setState({
-            persons: persons,
-            newName: ''
-        })
+        if (!this.state.persons.map(person => person.name).includes(nameObject.name)) {
+            const persons = this.state.persons.concat(nameObject)
+            this.setState({
+                persons: persons,
+                newName: ''
+            })
+        }
     }
     render() {
         return (
@@ -41,8 +43,8 @@ class App extends React.Component {
                     </div>
                 </form>
                 <h2>Numerot</h2>
-                {this.state.persons.map(person => <div key={person.name}>{person.name}</div>) }
-      </div>
+                {this.state.persons.map(person => <div key={person.name}>{person.name}</div>)}
+            </div>
         )
     }
 }
