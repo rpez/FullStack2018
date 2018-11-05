@@ -2,7 +2,7 @@ import React from 'react';
 import NewPerson from './components/newPerson'
 import Person from './components/person'
 import Filter from './components/filter'
-import axios from 'axios'
+import personService from './services/persons'
 
 class App extends React.Component {
     constructor(props) {
@@ -15,13 +15,14 @@ class App extends React.Component {
         }
     }
     componentDidMount() {
-        axios
-            .get('http://localhost:3002/persons')
+        personService
+            .getAll()
             .then(response => {
                 this.setState({ persons: response.data })
             })
     }
     addName = (event) => {
+
         event.preventDefault()
         const nameObject = {
             name: this.state.newName,
@@ -29,11 +30,16 @@ class App extends React.Component {
         }
         if (!this.state.persons.map(person => person.name).includes(nameObject.name)) {
             const persons = this.state.persons.concat(nameObject)
-            this.setState({
-                persons: persons,
-                newName: '',
-                newNumber: ''
-            })
+            personService
+                .create(nameObject)
+                .then(response => {
+                    this.setState({
+                        persons: persons,
+                        newName: '',
+                        newNumber: ''
+                    })
+                })
+
         }
     }
     handleNameChange = (event) => {
