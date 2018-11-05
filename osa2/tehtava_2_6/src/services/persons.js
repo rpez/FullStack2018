@@ -9,8 +9,10 @@ const create = (newObject) => {
     return axios.post(baseUrl, newObject)
 }
 
-const update = (id, newObject) => {
-    return axios.put(`${baseUrl}/${id}`, newObject)
+const deleteID = (props) => {
+    if (window.confirm(`poistetaanko ${props.name}`)) {
+        return axios.delete(`${baseUrl}/${props.id}`, null)
+    }
 }
 
-export default { getAll, create, update }
+export default { getAll, create, deleteID }

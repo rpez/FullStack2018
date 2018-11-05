@@ -26,7 +26,8 @@ class App extends React.Component {
         event.preventDefault()
         const nameObject = {
             name: this.state.newName,
-            number: this.state.newNumber
+            number: this.state.newNumber,
+            id: this.state.persons.length + 1
         }
         if (!this.state.persons.map(person => person.name).includes(nameObject.name)) {
             const persons = this.state.persons.concat(nameObject)
@@ -61,7 +62,7 @@ class App extends React.Component {
                 <h2>Numerot</h2>
                 <table>
                     <tbody>
-                        {this.state.persons.filter(person => person.name.toLowerCase().includes(this.state.filter.toLowerCase())).map(person => <Person key={person.name} props={person} />)}
+                        {this.state.persons.filter(person => person.name.toLowerCase().includes(this.state.filter.toLowerCase())).map(person => <Person key={person.id} props={person} />)}
                     </tbody>
                 </table>
 
