@@ -2,21 +2,24 @@ import React from 'react';
 import NewPerson from './components/newPerson'
 import Person from './components/person'
 import Filter from './components/filter'
+import axios from 'axios'
 
 class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            persons: [
-                { name: 'Arto Hellas', number: '040-123456' },
-                { name: 'Martti Tienari', number: '040-123456' },
-                { name: 'Arto Järvinen', number: '040-123456' },
-                { name: 'Lea Kutvonen', number: '040-123456' }
-            ],
+            persons: [],
             newName: '',
             newNumber: '',
             filter: ''
         }
+    }
+    componentDidMount() {
+        axios
+            .get('http://localhost:3002/persons')
+            .then(response => {
+                this.setState({ persons: response.data })
+            })
     }
     addName = (event) => {
         event.preventDefault()
