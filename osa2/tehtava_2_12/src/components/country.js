@@ -16,7 +16,7 @@ const Country = ({ props, showDetails = false }) => {
                 </h1>
                 <div>capital: {props.capital}</div>
                 <div>population: {props.population}</div>
-                <img src={props.flag} />
+                <img src={props.flag} alt='flag'></img>
             </div>
         )
     }
