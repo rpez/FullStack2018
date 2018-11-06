@@ -22,7 +22,6 @@ class App extends React.Component {
             })
     }
     addName = (event) => {
-
         event.preventDefault()
         const nameObject = {
             name: this.state.newName,
@@ -37,11 +36,24 @@ class App extends React.Component {
                     this.setState({
                         persons: persons,
                         newName: '',
+                        newNumber: '',
+                    })
+                })
+        }
+    }
+    deleteName = (id) => {
+        const nameObject = this.state.persons.find(person => person.id === id)
+        personService
+                .deleteID(nameObject)
+                .then(response => {
+                    const persons = this.state.persons.filter(person => person.id !== id)
+                    this.setState({
+                        persons: persons,
+                        newName: '',
                         newNumber: ''
                     })
                 })
 
-        }
     }
     handleNameChange = (event) => {
         this.setState({ newName: event.target.value })
@@ -62,7 +74,7 @@ class App extends React.Component {
                 <h2>Numerot</h2>
                 <table>
                     <tbody>
-                        {this.state.persons.filter(person => person.name.toLowerCase().includes(this.state.filter.toLowerCase())).map(person => <Person key={person.id} props={person} />)}
+                        {this.state.persons.filter(person => person.name.toLowerCase().includes(this.state.filter.toLowerCase())).map(person => <Person key={person.id} props={person} deleteName={this.deleteName} />)}
                     </tbody>
                 </table>
 

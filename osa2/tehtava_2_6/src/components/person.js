@@ -1,12 +1,11 @@
 import React from 'react'
-import personService from '../services/persons'
 
-const Person = ({ props }) => {
+const Person = ({ props, deleteName }) => {
     return (
         <tr>
             <td>{props.name}</td>
             <td>{props.number}</td>
-            <td><button onClick={() => personService.deleteID(props)}>poista</button></td>
+            <td><button onClick={() => deleteName(props.id)}>poista</button></td>
         </tr>
     )
 }

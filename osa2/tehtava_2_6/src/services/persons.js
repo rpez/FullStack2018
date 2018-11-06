@@ -11,7 +11,7 @@ const create = (newObject) => {
 
 const deleteID = (props) => {
     if (window.confirm(`poistetaanko ${props.name}`)) {
-        return axios.delete(`${baseUrl}/${props.id}`, null)
+        return axios.delete(`${baseUrl}/${props.id}`)
     }
 }
 
