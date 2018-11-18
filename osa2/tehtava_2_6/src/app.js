@@ -74,8 +74,8 @@ class App extends React.Component {
                 }, 2000)
             })
             .catch(error => {
-                alert(`henkilön '${nameObject.name}' poistaminen ei onnistunut`)
-                this.setState({ persons: this.state.notes.filter(n => n.id !== id) })
+                alert(`henkilö '${nameObject.name}' on jo valitettavasti poistettu palvelimelta`)
+                this.setState({ persons: this.state.persons.filter(n => n.id !== id) })
             })
 
     }

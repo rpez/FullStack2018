@@ -1,3 +1,14 @@
 {
-  "persons": []
+  "persons": [
+    {
+      "name": "Aleksi Mustonen",
+      "number": "03-121214124",
+      "id": 1
+    },
+    {
+      "name": "Pekka Mikkola",
+      "number": "234-234234",
+      "id": 2
+    }
+  ]
 }
