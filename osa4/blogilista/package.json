@@ -1,0 +1,31 @@
+{
+  "name": "blogilista",
+  "version": "1.0.0",
+  "description": "hy fullstack harjoitus",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rpez/FullStack2018/tree/master/osa4/blogilista"
+  },
+  "keywords": [
+    "blogilista"
+  ],
+  "author": "Reetu Kontio",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.15",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.7"
+  }
+}
