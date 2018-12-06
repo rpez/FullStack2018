@@ -18,8 +18,37 @@ const favoriteBlog = (blogs) => {
     }
 }
 
+const mostBlogs = (blogs) => {
+    if (blogs.length === 0) return null
+    else {
+        const authors = blogs.map(x => x.author)
+        var current = authors[0]
+        var currentMost = authors[0]
+        var currentAmount = 1
+        var amount = 0
+        for (i = 0; i < authors.length; i++) {
+            if (current === authors[i]) {
+                currentAmount++
+            }
+            else {
+                current = authors[i]
+                currentAmount = 1
+            }
+            if (currentAmount > amount) {
+                currentMost = authors[i]
+                amount = currentAmount
+            }
+        }
+        return {
+            author: currentMost,
+            blogs: amount
+        }
+    }
+}
+
 module.exports = {
     dummy,
     totalLikes,
-    favoriteBlog
+    favoriteBlog,
+    mostBlogs
 }

@@ -83,3 +83,20 @@ describe('favorite blog', () => {
         expect(result).toEqual(blogs[2])
     })
 })
+
+describe('most blogs', () => {
+    const emptyList = []
+
+    test('of empty list is null', () => {
+        const result = listHelper.mostBlogs(emptyList)
+        expect(result).toEqual(null)
+    })
+
+    test('of a bigger list is correct blog', () => {
+        const result = listHelper.mostBlogs(blogs)
+        expect(result).toEqual({
+            author: "Robert C. Martin",
+            blogs: 3
+        })
+    })
+})
