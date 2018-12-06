@@ -92,11 +92,28 @@ describe('most blogs', () => {
         expect(result).toEqual(null)
     })
 
-    test('of a bigger list is correct blog', () => {
+    test('of a bigger list is correct author and amount of blogs', () => {
         const result = listHelper.mostBlogs(blogs)
         expect(result).toEqual({
             author: "Robert C. Martin",
             blogs: 3
         })
+    })
+})
+
+describe('most likes', () => {
+    const emptyList = []
+
+    test('of empty list is null', () => {
+        const result = listHelper.mostLikes(emptyList)
+        expect(result).toEqual(null)
+    })
+
+    test('of a bigger list is correct author and amount of likes', () => {
+        const result = listHelper.mostLikes(blogs)
+        expect(result).toEqual({
+            author: "Edsger W. Dijkstra",
+            likes: 17
+          })
     })
 })
