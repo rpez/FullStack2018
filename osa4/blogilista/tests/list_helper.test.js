@@ -69,3 +69,17 @@ describe('total likes', () => {
         expect(result).toEqual(36)
     })
 })
+
+describe('favorite blog', () => {
+    const emptyList = []
+
+    test('of empty list is null', () => {
+        const result = listHelper.favoriteBlog(emptyList)
+        expect(result).toEqual(null)
+    })
+
+    test('of a bigger list is correct blog', () => {
+        const result = listHelper.favoriteBlog(blogs)
+        expect(result).toEqual(blogs[2])
+    })
+})
