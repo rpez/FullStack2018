@@ -24,11 +24,14 @@ blogsRouter.post('/', async (request, response) => {
             return response.status(400).json({ error: 'url missing' })
         }
 
+        newLikes = 0
+        if (body.likes !== undefined) newLikes = body.likes
+
         const blog = new Blog({
             title: body.title,
             author: body.author,
             url: body.url,
-            likes: body.likes
+            likes: newLikes
         })
 
         const savedBlog = await blog.save()

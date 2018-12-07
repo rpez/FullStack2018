@@ -71,6 +71,25 @@ test('a valid blog can be added ', async () => {
     expect(titles).toContain('New Test Blog')
 })
 
+test('note with not defined likes gets 0 likes', async () => {
+    const newBlog = {
+        title: 'New Test Blog',
+        author: 'Some new one',
+        url: 'www.asfd.com'
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+
+    const response = await api
+        .get('/api/blogs')
+
+    expect(response.body.find(x => x.title === newBlog.title).likes).toBe(0)
+})
+
 // test('note without content is not added ', async () => {
 //     const newBlog = {
 //         title: 'New Test Blog',
