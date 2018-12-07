@@ -4,9 +4,9 @@
   "description": "hy fullstack harjoitus",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "watch": "nodemon index.js",
-    "test": "jest --verbose"
+    "start": "cross-env NODE_ENV=production node index.js",
+    "watch": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "cross-env NODE_ENV=test jest --verbose"
   },
   "repository": {
     "type": "git",
@@ -26,8 +26,10 @@
     "morgan": "^1.9.1"
   },
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "jest": "^23.6.0",
-    "nodemon": "^1.18.7"
+    "nodemon": "^1.18.7",
+    "supertest": "^3.3.0"
   },
   "jest": {
     "testEnvironment": "node"
