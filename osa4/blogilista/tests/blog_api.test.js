@@ -2,25 +2,11 @@ const supertest = require('supertest')
 const { app, server } = require('../index')
 const api = supertest(app)
 const Blog = require('../models/blog')
-
-const initialBlogs = [
-    {
-        title: 'Test Blog',
-        author: 'Some one',
-        url: 'www.asfd.com',
-        likes: 0
-    },
-    {
-        title: 'Another Test Blog',
-        author: 'Some one another',
-        url: 'www.fdsa.com',
-        likes: 1
-    }
-]
+const helper = require('./test_helper')
 
 beforeAll(async () => {
     await Blog.remove({})
-    const blogObjects = initialBlogs.map(blog => new Blog(blog))
+    const blogObjects = helper.initialBlogs.map(blog => new Blog(blog))
     const promiseArray = blogObjects.map(blog => blog.save())
     await Promise.all(promiseArray)
 })
@@ -30,7 +16,7 @@ describe('all blogs are returned', () => {
         const response = await api
             .get('/api/blogs')
 
-        expect(response.body.length).toBe(initialBlogs.length)
+        expect(response.body.length).toBe(helper.initialBlogs.length)
     })
 })
 
@@ -44,19 +30,19 @@ describe('blog is correctly formatted', () => {
             likes: 0
         }
 
+        const blogsBefore = await helper.blogsInDb()
+
         await api
             .post('/api/blogs')
             .send(newBlog)
             .expect(201)
             .expect('Content-Type', /application\/json/)
 
-        const response = await api
-            .get('/api/blogs')
+        const blogsAfter = await helper.blogsInDb()
 
-        const titles = response.body.map(r => r.title)
-
-        expect(response.body.length).toBe(initialBlogs.length + 1)
-        expect(titles).toContain('New Test Blog')
+        expect(blogsAfter.length).toBe(blogsBefore.length + 1)
+        const titles = blogsAfter.map(x => x.title)
+        expect(titles).toContain(newBlog.title)
     })
 
     test('note with likes not defined gets 0 likes', async () => {
