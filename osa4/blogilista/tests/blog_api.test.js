@@ -48,28 +48,28 @@ test('all blogs are returned', async () => {
 //     expect(titles).toContain('Test Blog')
 // })
 
-// test('a valid blog can be added ', async () => {
-//     const newBlog = {
-//         title: 'New Test Blog',
-//         author: 'Some new one',
-//         url: 'www.asfd.com',
-//         likes: 0
-//     }
+test('a valid blog can be added ', async () => {
+    const newBlog = {
+        title: 'New Test Blog',
+        author: 'Some new one',
+        url: 'www.asfd.com',
+        likes: 0
+    }
 
-//     await api
-//         .post('/api/blogs')
-//         .send(newBlog)
-//         .expect(201)
-//         .expect('Content-Type', /application\/json/)
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
 
-//     const response = await api
-//         .get('/api/blogs')
+    const response = await api
+        .get('/api/blogs')
 
-//     const titles = response.body.map(r => r.title)
+    const titles = response.body.map(r => r.title)
 
-//     expect(response.body.length).toBe(initialBlogs.length + 1)
-//     expect(titles).toContain('New Test Blog')
-// })
+    expect(response.body.length).toBe(initialBlogs.length + 1)
+    expect(titles).toContain('New Test Blog')
+})
 
 // test('note without content is not added ', async () => {
 //     const newBlog = {
