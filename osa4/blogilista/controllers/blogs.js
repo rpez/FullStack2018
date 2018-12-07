@@ -12,8 +12,13 @@ const formatBlog = (blog) => {
 }
 
 blogsRouter.get('/', async (request, response) => {
-    const blogs = await Blog.find({})
-    response.json(blogs.map(formatBlog))
+    try {
+        const blogs = await Blog.find({})
+        response.json(blogs.map(formatBlog))
+    } catch (exeption) {
+        console.log(exeption)
+        response.status(500).json({ error: 'something went wrong...' })
+    }
 })
 
 blogsRouter.post('/', async (request, response) => {
@@ -39,6 +44,16 @@ blogsRouter.post('/', async (request, response) => {
     } catch (exeption) {
         console.log(exeption)
         response.status(500).json({ error: 'something went wrong...' })
+    }
+})
+
+blogsRouter.delete('/:id', async (request, response) => {
+    try {
+        await Blog.findByIdAndRemove(request.params.id)
+        response.status(204).end()
+    } catch (exeption) {
+        console.log(exeption)
+        response.status(400).json({ error: 'malformatted id' })
     }
 })
 
