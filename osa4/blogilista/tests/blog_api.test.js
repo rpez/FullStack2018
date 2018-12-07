@@ -58,10 +58,9 @@ describe('blog is correctly formatted', () => {
             .expect(201)
             .expect('Content-Type', /application\/json/)
 
-        const response = await api
-            .get('/api/blogs')
+        const response = await helper.blogsInDb()
 
-        expect(response.body.find(x => x.title === newBlog.title).likes).toBe(0)
+        expect(response.find(x => x.title === newBlog.title).likes).toBe(0)
     })
 
     test('blog without title is not added ', async () => {
@@ -71,18 +70,16 @@ describe('blog is correctly formatted', () => {
             likes: 0
         }
 
-        const initialBlogs = await api
-            .get('/api/blogs')
+        const initialBlogs = await helper.blogsInDb()
 
         await api
             .post('/api/blogs')
             .send(noTitleBlog)
             .expect(400)
 
-        const response = await api
-            .get('/api/blogs')
+        const response = await helper.blogsInDb()
 
-        expect(response.body.length).toBe(initialBlogs.body.length)
+        expect(response.length).toBe(initialBlogs.length)
     })
 
     test('blog without url is not added ', async () => {
@@ -92,18 +89,16 @@ describe('blog is correctly formatted', () => {
             likes: 0
         }
 
-        const initialBlogs = await api
-            .get('/api/blogs')
+        const initialBlogs = await helper.blogsInDb()
 
         await api
             .post('/api/blogs')
             .send(noTitleBlog)
             .expect(400)
 
-        const response = await api
-            .get('/api/blogs')
+        const response = await helper.blogsInDb()
 
-        expect(response.body.length).toBe(initialBlogs.body.length)
+        expect(response.length).toBe(initialBlogs.length)
     })
 })
 
