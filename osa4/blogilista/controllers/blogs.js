@@ -20,8 +20,8 @@ blogsRouter.post('/', async (request, response) => {
     try {
         const body = new Blog(request.body)
 
-        if (body.url === undefined) {
-            return response.status(400).json({ error: 'url missing' })
+        if (body.url === undefined || body.title === undefined) {
+            return response.status(400).json({ error: 'title or url missing' })
         }
 
         newLikes = 0

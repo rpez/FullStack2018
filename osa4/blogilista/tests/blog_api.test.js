@@ -90,28 +90,47 @@ test('note with not defined likes gets 0 likes', async () => {
     expect(response.body.find(x => x.title === newBlog.title).likes).toBe(0)
 })
 
-// test('note without content is not added ', async () => {
-//     const newBlog = {
-//         title: 'New Test Blog',
-//         author: 'Some new one'
-//     }
+test('blog without title is not added ', async () => {
+    const noTitleBlog = {
+        author: 'Some new one',
+        url: 'www.asfd.com',
+        likes: 0
+    }
 
-//     const initialBlogs = await api
-//         .get('/api/blogs')
+    const initialBlogs = await api
+        .get('/api/blogs')
 
-//     console.log(initialBlogs.length)
+    await api
+        .post('/api/blogs')
+        .send(noTitleBlog)
+        .expect(400)
 
-//     await api
-//         .post('/api/blogs')
-//         .send(newBlog)
-//         .expect(400)
+    const response = await api
+        .get('/api/blogs')
 
-//     const response = await api
-//         .get('/api/blogs')
+    expect(response.body.length).toBe(initialBlogs.body.length)
+})
 
-//     console.log(initialBlogs.length)
-//     expect(response.body.length).toBe(initialBlogs.length)
-// })
+test('blog without url is not added ', async () => {
+    const noTitleBlog = {
+        title: 'New Test Blog',
+        author: 'Some new one',
+        likes: 0
+    }
+
+    const initialBlogs = await api
+        .get('/api/blogs')
+
+    await api
+        .post('/api/blogs')
+        .send(noTitleBlog)
+        .expect(400)
+
+    const response = await api
+        .get('/api/blogs')
+
+    expect(response.body.length).toBe(initialBlogs.body.length)
+})
 
 afterAll(() => {
     server.close()
