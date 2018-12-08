@@ -103,14 +103,14 @@ describe('blog is correctly formatted', () => {
     })
 })
 
-describe('when there is initially one user at db', async () => {
+describe.only('user creation', async () => {
     beforeAll(async () => {
         await User.remove({})
         const user = new User({ username: 'root', password: 'sekret' })
         await user.save()
     })
 
-    test('POST /api/users succeeds with a fresh username', async () => {
+    test('POST /api/users succeeds with a fresh username and proper password', async () => {
         const usersBeforeOperation = await helper.usersInDb()
 
         const newUser = {
@@ -133,24 +133,45 @@ describe('when there is initially one user at db', async () => {
 
     test('POST /api/users fails with proper statuscode and message if username already taken', async () => {
         const usersBeforeOperation = await helper.usersInDb()
-      
+
         const newUser = {
-          username: 'root',
-          name: 'Superuser',
-          password: 'salainen'
+            username: 'root',
+            name: 'Superuser',
+            password: 'salainen'
         }
-      
+
         const result = await api
-          .post('/api/users')
-          .send(newUser)
-          .expect(400)
-          .expect('Content-Type', /application\/json/)
-      
-        expect(result.body).toEqual({ error: 'username must be unique'})
-      
+            .post('/api/users')
+            .send(newUser)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+
+        expect(result.body).toEqual({ error: 'username must be unique' })
+
         const usersAfterOperation = await helper.usersInDb()
         expect(usersAfterOperation.length).toBe(usersBeforeOperation.length)
-      })
+    })
+
+    test('POST /api/users fails with proper statuscode and message if password shorter than 3 letters', async () => {
+        const usersBeforeOperation = await helper.usersInDb()
+
+        const newUser = {
+            username: 'badpasswordguy',
+            name: 'A guy with bad password',
+            password: 'aa'
+        }
+
+        const result = await api
+            .post('/api/users')
+            .send(newUser)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+
+        expect(result.body).toEqual({ error: 'password must be at least 3 letters long' })
+
+        const usersAfterOperation = await helper.usersInDb()
+        expect(usersAfterOperation.length).toBe(usersBeforeOperation.length)
+    })
 })
 
 afterAll(() => {
