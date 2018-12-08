@@ -1,11 +1,10 @@
 POST  http://localhost:3001/api/blogs
 content-type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI1YzBiMTRjMzU1OTczMjRkODA2ZmQyMzMiLCJpYXQiOjE1NDQyMzM3MjZ9.KSffl0dAo01s-zzfXC9HeResiTceD-3BBTfaxOUGc7Q
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNvbWUyIiwiaWQiOiI1YzBiMjUxMWRiNDg0NjViODQxOTJjMmQiLCJpYXQiOjE1NDQyNzYyNDR9.WEyZ-ixtW25GhmemJpH4Zv1LlwJ9H7OLi6Tc89W70A4
 
 {
     "title": "Test Blog",
     "author": "Some one",
     "url": "www.asfd.com",
-    "likes": 0,
-    "user": "5c0b14c35597324d806fd233"
+    "likes": 0
 }
