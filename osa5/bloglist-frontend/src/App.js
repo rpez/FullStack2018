@@ -76,9 +76,44 @@ class App extends React.Component {
   }
 
   updateLikes = (blog) => {
-    this.setState({
-      blogs: this.state.blogs.map(x => x._id !== blog._id ? x : blog)
-    })
+    return async () => {
+      try {
+        const blogObject = {
+          _id: blog._id,
+          title: blog.title,
+          author: blog.author,
+          url: blog.url,
+          likes: blog.likes + 1,
+          user: blog.user._id
+        }
+
+        const newBlog = await blogService.update(blog._id, blogObject)
+
+        this.setState({
+          blogs: this.state.blogs.map(x => x._id !== newBlog._id ? x : newBlog)
+        })
+      } catch (exception) {
+        console.log(exception)
+      }
+    }
+  }
+
+  deleteBlog = (id) => {
+    return async () => {
+      try {
+        const blog = this.state.blogs.filter(x => x._id === id)
+
+        if (window.confirm(`delete ${blog.title} by ${blog.author}?`)) {
+          await blogService.deleteBlog(id)
+          this.setState({ blogs: this.state.blogs.filter(x => x._id !== id) })
+          this.notify('blog deleted', false)
+        }
+        else this.notify('deletion cancelled', false)
+      } catch (exception) {
+        console.log(exception)
+        this.notify('delete not successful', true)
+      }
+    }
   }
 
   render() {
@@ -134,8 +169,8 @@ class App extends React.Component {
               {blogForm()}
             </div>
             <div>
-              {this.state.blogs.map(blog =>
-                <Blog key={blog._id} blog={blog} updateLikes={this.updateLikes} />
+              {this.state.blogs.sort((a, b) => b.likes - a.likes).map(blog =>
+                <Blog key={blog._id} blog={blog} updateLikes={this.updateLikes} deleteBlog={this.deleteBlog} />
               )}
             </div>
           </div>

@@ -20,7 +20,6 @@ class BlogForm extends React.Component {
             author: this.state.newAuthor,
             url: this.state.newUrl
         }
-        console.log(blogObject)
 
         try {
             const newBlog = await blogService.create(blogObject)
