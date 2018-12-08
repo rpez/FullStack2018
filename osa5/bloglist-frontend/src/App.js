@@ -1,6 +1,7 @@
 import React from 'react'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
+import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
@@ -110,7 +111,9 @@ class App extends React.Component {
         <p>{this.state.user.name} logged in</p>
         <button onClick={() => window.localStorage.removeItem('loggedNoteappUser')}>logout</button>
         <h2>create new</h2>
-        <BlogForm updateBlogs={this.updateBlogs} notify={this.notify} />
+        <Togglable buttonLabel="create new" >
+          <BlogForm updateBlogs={this.updateBlogs} notify={this.notify} />
+        </Togglable>
       </div>
     )
 
