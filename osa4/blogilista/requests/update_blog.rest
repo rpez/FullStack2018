@@ -1,10 +1,9 @@
-POST  http://localhost:3001/api/blogs
+PUT  http://localhost:3001/api/blogs/5c0ae6701935102da07f5450
 content-type: application/json
 
 {
     "title": "Test Blog",
     "author": "Some one",
     "url": "www.asfd.com",
-    "likes": 0,
-    "user": "5c0b14c35597324d806fd233"
+    "likes": 1
 }
