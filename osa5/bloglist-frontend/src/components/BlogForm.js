@@ -1,5 +1,6 @@
 import React from 'react'
 import blogService from '../services/blogs'
+import Togglable from '../components/Togglable'
 
 class BlogForm extends React.Component {
     constructor(props) {
@@ -43,38 +44,40 @@ class BlogForm extends React.Component {
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.addBlog}>
-                    <div>
-                        <div>title</div>
-                        <input
-                            type="text"
-                            name="newTitle"
-                            value={this.state.newTitle}
-                            onChange={this.handleFieldChange}
-                        />
-                    </div>
-                    <div>
-                        <div>author</div>
-                        <input
-                            type="text"
-                            name="newAuthor"
-                            value={this.state.newAuthor}
-                            onChange={this.handleFieldChange}
-                        />
-                    </div>
-                    <div>
-                        <div>url</div>
-                        <input
-                            type="text"
-                            name="newUrl"
-                            value={this.state.newUrl}
-                            onChange={this.handleFieldChange}
-                        />
-                    </div>
-                    <button type="submit">create</button>
-                </form>
-            </div>
+            <Togglable buttonLabel="create new">
+                <div>
+                    <form onSubmit={this.addBlog}>
+                        <div>
+                            <div>title</div>
+                            <input
+                                type="text"
+                                name="newTitle"
+                                value={this.state.newTitle}
+                                onChange={this.handleFieldChange}
+                            />
+                        </div>
+                        <div>
+                            <div>author</div>
+                            <input
+                                type="text"
+                                name="newAuthor"
+                                value={this.state.newAuthor}
+                                onChange={this.handleFieldChange}
+                            />
+                        </div>
+                        <div>
+                            <div>url</div>
+                            <input
+                                type="text"
+                                name="newUrl"
+                                value={this.state.newUrl}
+                                onChange={this.handleFieldChange}
+                            />
+                        </div>
+                        <button type="submit">create</button>
+                    </form>
+                </div>
+            </Togglable>
         )
     }
 }
