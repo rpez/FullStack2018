@@ -46,7 +46,7 @@ describe('blog is correctly formatted', () => {
         expect(titles).toContain(newBlog.title)
     })
 
-    test('note with likes not defined gets 0 likes', async () => {
+    test('blog with likes not defined gets 0 likes', async () => {
         const newBlog = {
             title: 'New Test Blog',
             author: 'Some new one',
