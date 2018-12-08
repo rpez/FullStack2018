@@ -1,4 +1,5 @@
 import React from 'react'
+import blogService from '../services/blogs'
 
 class Blog extends React.Component {
   constructor(props) {
@@ -7,10 +8,29 @@ class Blog extends React.Component {
       visible: false
     }
     this.blog = props.blog
+    this.updateLikes = props.updateLikes
   }
 
   toggleVisibility = () => {
     this.setState({ visible: !this.state.visible })
+  }
+
+  like = async (blog) => {
+    try {
+      const blogObject = {
+        _id: blog._id,
+        title: blog.title,
+        author: blog.author,
+        url: blog.url,
+        likes: blog.likes + 1,
+        user: blog.user._id
+      }
+
+      const newBlog = await blogService.update(blog._id, blogObject, { new: true })
+      this.updateLikes(newBlog)
+    } catch (exception) {
+      console.log(exception)
+    }
   }
 
   render() {
@@ -40,7 +60,7 @@ class Blog extends React.Component {
           <div>{this.blog.url}</div>
           <div>
             <div>{this.blog.likes} likes</div>
-            <button>like</button>
+            <button onClick={() => this.like(this.blog)}>like</button>
           </div>
           <div>{adder}</div>
         </div>

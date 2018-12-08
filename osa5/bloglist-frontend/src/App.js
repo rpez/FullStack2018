@@ -75,6 +75,12 @@ class App extends React.Component {
     this.setState({ blogs: this.state.blogs.concat(blog) })
   }
 
+  updateLikes = (blog) => {
+    this.setState({
+      blogs: this.state.blogs.map(x => x._id !== blog._id ? x : blog)
+    })
+  }
+
   render() {
 
     const loginForm = () => (
@@ -129,7 +135,7 @@ class App extends React.Component {
             </div>
             <div>
               {this.state.blogs.map(blog =>
-                <Blog key={blog._id} blog={blog} />
+                <Blog key={blog._id} blog={blog} updateLikes={this.updateLikes} />
               )}
             </div>
           </div>
