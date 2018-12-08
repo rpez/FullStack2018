@@ -118,6 +118,7 @@ class App extends React.Component {
       <div>
         <h1>blogs</h1>
         <p>{this.state.user.name} logged in</p>
+        <button onClick={() => window.localStorage.removeItem('loggedNoteappUser')}>logout</button>
         <h2>Create new blog</h2>
 
         <form onSubmit={this.addNote}>
