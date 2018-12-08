@@ -1,6 +1,7 @@
 import React from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
+import loginService from './services/login'
 import Notification from './components/Notification'
 
 class App extends React.Component {
@@ -21,6 +22,13 @@ class App extends React.Component {
     blogService.getAll().then(blogs =>
       this.setState({ blogs })
     )
+
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      this.setState({ user })
+      blogService.setToken(user.token)
+    }
   }
 
   addNote = (event) => {
@@ -43,9 +51,25 @@ class App extends React.Component {
       })
   }
 
-  login = (event) => {
+  login = async (event) => {
     event.preventDefault()
-    console.log('logging in with', this.state.username, this.state.password)
+    try {
+      const user = await loginService.login({
+        username: this.state.username,
+        password: this.state.password
+      })
+
+      window.localStorage.setItem('loggedNoteappUser', JSON.stringify(user))
+      blogService.setToken(user.token)
+      this.setState({ username: '', password: '', user })
+    } catch (exception) {
+      this.setState({
+        error: 'wrong username or password',
+      })
+      setTimeout(() => {
+        this.setState({ error: null })
+      }, 5000)
+    }
   }
 
   handleNoteChange = (event) => {
@@ -53,11 +77,7 @@ class App extends React.Component {
   }
 
   handleLoginFieldChange = (event) => {
-    if (event.target.name === 'password') {
-      this.setState({ password: event.target.value })
-    } else if (event.target.name === 'username') {
-      this.setState({ username: event.target.value })
-    }
+    this.setState({ [event.target.name]: event.target.value })
   }
 
   toggleVisible = () => {
@@ -65,52 +85,70 @@ class App extends React.Component {
   }
 
   render() {
-    return (
+
+    const loginForm = () => (
       <div>
-        <h1>Muistiinpanot</h1>
-
-        <Notification message={this.state.error} />
-
-        <h2>Kirjaudu</h2>
+        <h1>Log in to application</h1>
 
         <form onSubmit={this.login}>
           <div>
-            käyttäjätunnus
+            username:
             <input
               type="text"
+              name="username"
               value={this.state.username}
-              onChange={this.handleUsernameChange}
+              onChange={this.handleLoginFieldChange}
             />
           </div>
           <div>
-            salasana
+            password:
             <input
               type="password"
+              name="password"
               value={this.state.password}
-              onChange={this.handlePasswordChange}
+              onChange={this.handleLoginFieldChange}
             />
           </div>
-          <button type="submit">kirjaudu</button>
+          <button type="submit">login</button>
         </form>
+      </div>
+    )
 
-        <h2>Luo uusi muistiinpano</h2>
+    const noteForm = () => (
+      <div>
+        <h1>blogs</h1>
+        <p>{this.state.user.name} logged in</p>
+        <h2>Create new blog</h2>
 
-        <form onSubmit={this.addBlog}>
+        <form onSubmit={this.addNote}>
           <input
-            value={this.state.newBlog}
+            value={this.state.newNote}
             onChange={this.handleNoteChange}
           />
-          <button type="submit">tallenna</button>
+          <button type="submit">save</button>
         </form>
+      </div>
+    )
 
-        <h2>Muistiinpanot</h2>
+    return (
+      <div>
+        <Notification message={this.state.error} />
 
-        <div>
-          <h2>blogs</h2>
-          {this.state.blogs.map(blog =>
-            <Blog key={blog._id} blog={blog} />
-          )}
-        </div>
+        {this.state.user === null ?
+          loginForm() :
+          <div>
+            <div>
+              {noteForm()}
+            </div>
+            <div>
+              {this.state.blogs.map(blog =>
+                <Blog key={blog._id} blog={blog} />
+              )}
+            </div>
+          </div>
+        }
+
+
 
       </div >
     )
