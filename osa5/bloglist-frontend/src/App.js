@@ -11,6 +11,7 @@ class App extends React.Component {
     this.state = {
       blogs: [],
       showAll: true,
+      message: null,
       error: null,
       username: '',
       password: '',
@@ -42,14 +43,23 @@ class App extends React.Component {
       window.localStorage.setItem('loggedNoteappUser', JSON.stringify(user))
       blogService.setToken(user.token)
       this.setState({ username: '', password: '', user })
+      this.notify('login successful', false)
     } catch (exception) {
-      this.setState({
-        error: 'wrong username or password',
-      })
+      this.notify('wrong username or password', true)
       setTimeout(() => {
         this.setState({ error: null })
       }, 5000)
     }
+  }
+
+  notify = (message, isError) => {
+    this.setState({
+      error: isError,
+      message: message
+    })
+    setTimeout(() => {
+      this.setState({ message: null })
+    }, 2000)
   }
 
   handleLoginFieldChange = (event) => {
@@ -100,13 +110,13 @@ class App extends React.Component {
         <p>{this.state.user.name} logged in</p>
         <button onClick={() => window.localStorage.removeItem('loggedNoteappUser')}>logout</button>
         <h2>create new</h2>
-        <BlogForm updateBlogs={this.updateBlogs} />
+        <BlogForm updateBlogs={this.updateBlogs} notify={this.notify} />
       </div>
     )
 
     return (
       <div>
-        <Notification message={this.state.error} />
+        <Notification message={this.state.message} isError={this.state.error} />
 
         {this.state.user === null ?
           loginForm() :

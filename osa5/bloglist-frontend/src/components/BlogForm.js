@@ -10,6 +10,7 @@ class BlogForm extends React.Component {
             newUrl: ''
         }
         this.updateBlogs = props.updateBlogs
+        this.notify = props.notify
     }
 
     addBlog = async (event) => {
@@ -29,8 +30,10 @@ class BlogForm extends React.Component {
                 newUrl: ''
             })
             this.updateBlogs(newBlog)
+            this.notify(`added blog ${newBlog.title}`, false)
         } catch (exception) {
             console.log(exception)
+            this.notify('blog creation unsuccessful', true)
         }
     }
 
