@@ -1,5 +1,6 @@
 import React from 'react'
 import Blog from './components/Blog'
+import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
@@ -9,7 +10,6 @@ class App extends React.Component {
     super(props)
     this.state = {
       blogs: [],
-      newBlog: '',
       showAll: true,
       error: null,
       username: '',
@@ -29,26 +29,6 @@ class App extends React.Component {
       this.setState({ user })
       blogService.setToken(user.token)
     }
-  }
-
-  addNote = (event) => {
-    event.preventDefault()
-    const blogObject = {
-      title: String,
-      author: String,
-      url: String,
-      likes: Number,
-      // user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
-    }
-
-    blogService
-      .create(blogObject)
-      .then(newBlog => {
-        this.setState({
-          blogs: this.state.blogs.concat(newBlog),
-          newBlog: ''
-        })
-      })
   }
 
   login = async (event) => {
@@ -72,16 +52,16 @@ class App extends React.Component {
     }
   }
 
-  handleNoteChange = (event) => {
-    this.setState({ newBlog: event.target.value })
-  }
-
   handleLoginFieldChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
 
   toggleVisible = () => {
     this.setState({ showAll: !this.state.showAll })
+  }
+
+  updateBlogs = (blog) => {
+    this.setState({ blogs: this.state.blogs.concat(blog) })
   }
 
   render() {
@@ -114,20 +94,13 @@ class App extends React.Component {
       </div>
     )
 
-    const noteForm = () => (
+    const blogForm = () => (
       <div>
         <h1>blogs</h1>
         <p>{this.state.user.name} logged in</p>
         <button onClick={() => window.localStorage.removeItem('loggedNoteappUser')}>logout</button>
-        <h2>Create new blog</h2>
-
-        <form onSubmit={this.addNote}>
-          <input
-            value={this.state.newNote}
-            onChange={this.handleNoteChange}
-          />
-          <button type="submit">save</button>
-        </form>
+        <h2>create new</h2>
+        <BlogForm updateBlogs={this.updateBlogs} />
       </div>
     )
 
@@ -139,7 +112,7 @@ class App extends React.Component {
           loginForm() :
           <div>
             <div>
-              {noteForm()}
+              {blogForm()}
             </div>
             <div>
               {this.state.blogs.map(blog =>
@@ -148,8 +121,6 @@ class App extends React.Component {
             </div>
           </div>
         }
-
-
 
       </div >
     )
