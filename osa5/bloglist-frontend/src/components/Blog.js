@@ -34,10 +34,10 @@ class Blog extends React.Component {
 
     return (
       <div style={blogStyle}>
-        <div onClick={this.toggleVisibility} style={hideWhenVisible}>
+        <div onClick={this.toggleVisibility} style={hideWhenVisible} className="title_author">
           {this.blog.title} {this.blog.author}
         </div>
-        <div style={showWhenVisible}>
+        <div style={showWhenVisible} className="other_info">
           <div onClick={this.toggleVisibility}>{this.blog.title} {this.blog.author}</div>
           <div>{this.blog.url}</div>
           <div>
