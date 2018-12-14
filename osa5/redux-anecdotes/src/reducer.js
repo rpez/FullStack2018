@@ -7,7 +7,7 @@ const anecdotesAtStart = [
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 
-const getId = () => (100000*Math.random()).toFixed(0)
+const getId = () => (100000 * Math.random()).toFixed(0)
 
 const asObject = (anecdote) => {
   return {
@@ -20,9 +20,19 @@ const asObject = (anecdote) => {
 const initialState = anecdotesAtStart.map(asObject)
 
 const reducer = (state = initialState, action) => {
-  console.log('state now: ',state)
-  console.log('action', action)
-  
+
+  if (action.type.id !== undefined) {
+    const anecdote = state.find(x => x.id === action.type.id)
+    const newAnec = {
+      content: anecdote.content,
+      id: anecdote.id,
+      votes: anecdote.votes + 1
+    }
+    const newState = state.filter(x => x.id !== action.type.id).concat(newAnec)
+
+    return newState
+  }
+
   return state
 }
 
