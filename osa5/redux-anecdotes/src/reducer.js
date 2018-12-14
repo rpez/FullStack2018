@@ -21,14 +21,24 @@ const initialState = anecdotesAtStart.map(asObject)
 
 const reducer = (state = initialState, action) => {
 
-  if (action.type.id !== undefined) {
-    const anecdote = state.find(x => x.id === action.type.id)
+  if (action.type === 'NEW_ANECDOTE') {
+    const newAnec = {
+      content: action.data,
+      id: getId(),
+      votes: 0
+    }
+    const newState = state.concat(newAnec)
+
+    return newState
+  }
+  else if (action.type === 'VOTE') {
+    const anecdote = state.find(x => x.id === action.id)
     const newAnec = {
       content: anecdote.content,
       id: anecdote.id,
       votes: anecdote.votes + 1
     }
-    const newState = state.filter(x => x.id !== action.type.id).concat(newAnec)
+    const newState = state.filter(x => x.id !== action.id).concat(newAnec)
 
     return newState
   }
