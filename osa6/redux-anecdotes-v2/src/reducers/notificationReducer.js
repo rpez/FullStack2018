@@ -6,12 +6,12 @@ const initialState = notificationsAtStart
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'NOTIFY':
-      return action.msg
-    case 'EMPTY':
-      return action.msg
-    default:
-      return state
+  case 'NOTIFY':
+    return action.msg
+  case 'EMPTY':
+    return action.msg
+  default:
+    return state
   }
 }
 
