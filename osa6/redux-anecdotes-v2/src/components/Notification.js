@@ -1,5 +1,4 @@
 import React from 'react'
-import { notify } from '../reducers/notificationReducer'
 
 class Notification extends React.Component {
   render() {
