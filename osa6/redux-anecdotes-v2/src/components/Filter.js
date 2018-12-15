@@ -1,11 +1,11 @@
 /* eslint-disable indent */
 import React from 'react'
 import { filter } from '../reducers/filterReducer'
+import { connect } from 'react-redux'
 
 class Filter extends React.Component {
     handleChange = (event) => {
-        console.log(event.target.value)
-        this.props.store.dispatch(filter(event.target.value))
+        this.props.filter(event.target.value)
     }
     render() {
         const style = {
@@ -20,4 +20,16 @@ class Filter extends React.Component {
     }
 }
 
-export default Filter
+const mapStateToProps = (state) => {
+    return {
+        anecdotes: state.anecdotes,
+        filter: state.filter
+    }
+}
+
+const ConnectedFilter = connect(
+    mapStateToProps,
+    { filter }
+)(Filter)
+
+export default ConnectedFilter
