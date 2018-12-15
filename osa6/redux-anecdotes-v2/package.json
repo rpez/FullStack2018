@@ -16,6 +16,8 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "eslint": "^5.10.0"
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.10.0",
+    "eslint-plugin-jest": "^22.1.2"
   }
 }
